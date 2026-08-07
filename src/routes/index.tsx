@@ -34,6 +34,23 @@ const logo = [
 
 function Index() {
   const [query, setQuery] = useState("");
+  const [theme, setTheme] = useState<"light" | "dark">("light");
+
+  useEffect(() => {
+    const saved = localStorage.getItem("theme");
+    const initial =
+      saved === "dark" || saved === "light"
+        ? saved
+        : window.matchMedia("(prefers-color-scheme: dark)").matches
+          ? "dark"
+          : "light";
+    setTheme(initial);
+  }, []);
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", theme === "dark");
+    localStorage.setItem("theme", theme);
+  }, [theme]);
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -50,9 +67,21 @@ function Index() {
         <a href="https://images.google.com" className="hover:underline">
           Imagens
         </a>
+        <button
+          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+          aria-label={theme === "dark" ? "Ativar tema claro" : "Ativar tema escuro"}
+          className="rounded-full p-2 hover:bg-accent"
+        >
+          {theme === "dark" ? (
+            <Sun className="size-5 text-muted-foreground" />
+          ) : (
+            <Moon className="size-5 text-muted-foreground" />
+          )}
+        </button>
         <button aria-label="Apps do Google" className="rounded-full p-2 hover:bg-accent">
           <Grid3x3 className="size-5 text-muted-foreground" />
         </button>
+
         <button
           aria-label="Conta do Google"
           className="size-8 rounded-full bg-g-blue text-sm font-medium text-background"
