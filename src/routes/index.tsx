@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
-import { Grid3x3, Mic, Camera, Keyboard, Sparkles, Search } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Grid3x3, Mic, Camera, Keyboard, Sparkles, Search, Sun, Moon } from "lucide-react";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
